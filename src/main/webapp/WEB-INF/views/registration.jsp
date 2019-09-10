@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: MarDem
@@ -12,6 +13,7 @@
     <title>Rejestracja użytkownika</title>
 </head>
 <body>
+<a href='<c:url value="/"/>'>Strona główna</a>
 <form:form method="post" modelAttribute="data">
     <p>
         Email: <form:input path="email" type="email"/>
