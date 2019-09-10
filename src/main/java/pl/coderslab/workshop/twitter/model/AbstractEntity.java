@@ -12,12 +12,12 @@ public abstract class AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Override
-    public String toString() {
-        return "AbstractEntity{" +
-                "id=" + id +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "AbstractEntity{" +
+//                "id=" + id +
+//                '}';
+//    }
 
     @Override
     public boolean equals(Object o) {
