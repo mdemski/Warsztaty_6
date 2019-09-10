@@ -1,18 +1,22 @@
 package pl.coderslab.workshop.twitter.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import pl.coderslab.workshop.twitter.model.AbstractEntity;
 import pl.coderslab.workshop.twitter.model.Tweet;
 import pl.coderslab.workshop.twitter.model.User;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-public interface TweetRepository extends JpaRepository<Tweet, Long> {
+public interface TweetRepository<T extends AbstractEntity, L extends Number> extends JpaRepository<Tweet, Long> {
 
-    List<Tweet> findAllByUser(User user);
+    Page<Tweet> findAllByUser(Pageable pageable, User user);
 
-    List<Tweet> findAllByUserEmail(String email);
+    Page<Tweet> findAllByUserId(Pageable pageable, Long userId);
 
-    List<Tweet> findAllByCreatedGreaterThan(LocalDateTime dateTime);
+    Page<Tweet> findAllByCreatedGreaterThan(Pageable pageable, LocalDateTime dateTime);
+
+    Tweet findOneById(Long id);
 
 }
