@@ -3,7 +3,6 @@ package pl.coderslab.workshop.twitter.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,19 +16,29 @@ public class User extends AbstractEntity{
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy="user")
     private List<Tweet> tweets;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Comment> comments;
 
-    public User(String email, String password, String firstName, String lastName, List<Tweet> tweets) {
+    public User(String email, String password, String firstName, String lastName, List<Tweet> tweets, List<Comment> comments) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.tweets = tweets;
+        this.comments = comments;
     }
 
     public User() {
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getEmail() {
@@ -80,6 +89,7 @@ public class User extends AbstractEntity{
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", tweets=" + tweets +
+                ", comments=" + comments +
                 "} " + super.toString();
     }
 }
