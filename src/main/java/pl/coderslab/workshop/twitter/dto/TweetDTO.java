@@ -1,20 +1,24 @@
 package pl.coderslab.workshop.twitter.dto;
 
-import org.hibernate.validator.constraints.NotBlank;
-import pl.coderslab.workshop.twitter.model.User;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class TweetDTO {
 
+    private Long id;
     private String userName;
-    @NotBlank
-    @Size(max = 160, message = "Maksymalna długość wpisu to 160 znaków")
     private String text;
     private LocalDateTime created;
+
+    public TweetDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUserName() {
         return userName;
