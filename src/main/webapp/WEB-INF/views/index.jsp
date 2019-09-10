@@ -13,7 +13,7 @@
     <title>Strona główna</title>
 </head>
 <body>
-<a href='<c:url value="/">'>Strona główna</a>
+<a href='<c:url value="/"/>'>Strona główna</a>
 <h1>Dzień dobry ${username}</h1>
 
 <h2>Dodaj nowy post</h2>
