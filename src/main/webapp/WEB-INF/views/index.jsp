@@ -16,20 +16,22 @@
 <a href='<c:url value="/"/>'>Strona główna</a>
 <h1>Dzień dobry ${username}</h1>
 
-<h2>Dodaj nowy post</h2>
-<form:form method="post" modelAttribute="tweetDTO" action="/add-tweet">
-    <p>
-        <form:input path="text"/>
-    </p>
-    <p>
-        <input type="submit" value="Dodaj">
-    </p>
-</form:form>
+<section class="adding-tweet">
+    <h2>Dodaj nowy post</h2>
+    <form:form method="post" modelAttribute="tweetDTO" action="/add-tweet">
+        <p>
+            <form:input path="text"/>
+        </p>
+        <p>
+            <input type="submit" value="Dodaj">
+        </p>
+    </form:form>
+</section>
 
 <a href='<c:url value="/user-tweets/"/>'>List moich tweetów</a>
 
 <h2>Lista wszystkich tweetów</h2>
-<table>
+<table class="all-tweets">
     <th>Użytkownik</th>
     <th>Tekst</th>
     <th>Szczegóły</th>
@@ -43,6 +45,5 @@
         </tr>
     </c:forEach>
 </table>
-
 </body>
 </html>
