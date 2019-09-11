@@ -27,6 +27,10 @@ public class TweetService {
 
     public List<TweetDTO> findAllByUserId(Long userId) {
         Page<Tweet> tweets = tweetRepository.findAllByUserId(new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "created")), userId);
+        return getTweetDTOS(tweets);
+    }
+
+    private List<TweetDTO> getTweetDTOS(Page<Tweet> tweets) {
         List<Tweet> content = tweets.getContent();
         return content.stream().map(source -> {
             TweetDTO dto = new TweetDTO();
@@ -40,28 +44,12 @@ public class TweetService {
 
     public List<TweetDTO> findAllByCreatedGreaterThan(LocalDateTime dateTime) {
         Page<Tweet> tweetList = tweetRepository.findAllByCreatedGreaterThan(new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "created")), dateTime);
-        List<Tweet> content = tweetList.getContent();
-        return content.stream().map(source -> {
-            TweetDTO dto = new TweetDTO();
-            dto.setId(source.getId());
-            dto.setText(source.getText());
-            dto.setCreated(source.getCreated());
-            dto.setUserName(source.getUser().getEmail());
-            return dto;
-        }).collect(Collectors.toList());
+        return getTweetDTOS(tweetList);
     }
 
     public List<TweetDTO> findAllTweets() {
         Page<Tweet> tweets = tweetRepository.findAll(new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "created")));
-        List<Tweet> content = tweets.getContent();
-        return content.stream().map(source -> {
-            TweetDTO dto = new TweetDTO();
-            dto.setId(source.getId());
-            dto.setText(source.getText());
-            dto.setCreated(source.getCreated());
-            dto.setUserName(source.getUser().getEmail());
-            return dto;
-        }).collect(Collectors.toList());
+        return getTweetDTOS(tweets);
     }
 
     List<Comment> findAllByTweet(Tweet tweet) {
