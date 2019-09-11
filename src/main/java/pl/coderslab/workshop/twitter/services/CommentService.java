@@ -34,6 +34,10 @@ public class CommentService {
 
     public List<CommentDTO> getCommentsByTweet(Tweet tweet) {
         Page<Comment> commentList = commentRepository.findAllByTweet(new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "created")), tweet);
+        return getCommentDTOS(commentList);
+    }
+
+    private List<CommentDTO> getCommentDTOS(Page<Comment> commentList) {
         List<Comment> commentText = commentList.getContent();
         return commentText.stream().map(source -> {
             CommentDTO commentDTO = new CommentDTO();
@@ -47,15 +51,7 @@ public class CommentService {
 
     public List<CommentDTO> getCommentByTweetId(Long id) {
         Page<Comment> commentList = commentRepository.findAllByTweetId(new PageRequest(0, 20, new Sort(Sort.Direction.DESC, "created")), id);
-        List<Comment> commentText = commentList.getContent();
-        return commentText.stream().map(source -> {
-            CommentDTO commentDTO = new CommentDTO();
-            commentDTO.setUserName(source.getUser().getEmail());
-            commentDTO.setTweetName(source.getTweet().toString());
-            commentDTO.setCreated(source.getCreated());
-            commentDTO.setText(source.getText());
-            return commentDTO;
-        }).collect(Collectors.toList());
+        return getCommentDTOS(commentList);
     }
 
     public void addCommentByUser(String email, AddCommentDTO addCommentDTO, Long id){
