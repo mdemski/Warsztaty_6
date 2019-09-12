@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,12 +18,12 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/twitter?serverTimezone=UTC&useSSL=false");
@@ -50,11 +51,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //wyłączamy analizę csrf
                 .authorizeRequests()
                 //autoryzacja dostępu w tym wypadku dla wszystkich
-                    .antMatchers("/register").permitAll()
-                    .antMatchers("/login").permitAll()
-                    .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/register").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 // wyciągamy role z bazy jeśli chcemy ograniczyć dostęp względem ról (role są najczęściej osobną tabelą ROLE_ADMIN nazwa z bazy danych
                 .anyRequest().authenticated();
-                //robić na końcu bo to idzie od góry (powyższe wykluczają to wymuszenie autoryzacji).
+        //robić na końcu bo to idzie od góry (powyższe wykluczają to wymuszenie autoryzacji).
     }
+
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**");
+    }
+
+
 }
