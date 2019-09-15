@@ -1,5 +1,6 @@
 package pl.coderslab.workshop.twitter.services;
 
+import com.google.common.collect.Lists;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -8,6 +9,7 @@ import pl.coderslab.workshop.twitter.dto.MessageDTO;
 import pl.coderslab.workshop.twitter.dto.SendMessageDTO;
 import pl.coderslab.workshop.twitter.model.AbstractEntity;
 import pl.coderslab.workshop.twitter.model.Message;
+import pl.coderslab.workshop.twitter.model.User;
 import pl.coderslab.workshop.twitter.repositories.MessageRepository;
 import pl.coderslab.workshop.twitter.repositories.UserRepository;
 
@@ -49,11 +51,11 @@ public class MessageService {
         MessageDTO messageDTO = new MessageDTO();
         messageDTO.setId(messageRepo.getId());
         messageDTO.setSenderName(messageRepo.getSender().getEmail());
-//        messageDTO.setRecipientName(messageRepo.getRecipient().getEmail());
+        messageDTO.setRecipientName(messageRepo.getRecipient().getEmail());
         messageDTO.setTitle(messageRepo.getTitle());
         messageDTO.setContent(messageRepo.getContent());
         messageDTO.setCreated(messageRepo.getPost());
-        messageDTO.setRead(messageRepo.isRead());
+//        messageDTO.setRead(messageRepo.isRead());
         return messageDTO;
     }
 
@@ -68,17 +70,22 @@ public class MessageService {
             MessageDTO messageDTO = new MessageDTO();
             messageDTO.setId(source.getId());
             messageDTO.setSenderName(source.getSender().getEmail());
-//            messageDTO.setRecipientName(source.getRecipient().getEmail());
+            messageDTO.setRecipientName(source.getRecipient().getEmail());
             messageDTO.setTitle(source.getTitle());
             messageDTO.setContent(source.getContent());
             messageDTO.setCreated(source.getPost());
-            messageDTO.setRead(source.isRead());
+//            messageDTO.setRead(source.isRead());
             return messageDTO;
         }).collect(Collectors.toList());
     }
 
-    private void sendMessage(SendMessageDTO sendMessageDTO, Principal principal){
+    private void sendMessage(SendMessageDTO sendMessageDTO, Principal principal) {
         Message message = new Message();
+        User sender = new User();
+        userRepository.save(sender);
+        User recipient = new User();
+//        recipient.setReceivedMessages(Lists.newArrayList(message));
+        userRepository.save(recipient);
         message.setSender(userRepository.getByEmail(principal.getName()));
 //        message.setRecipient(sendMessageDTO.getRecipientName());
     }
