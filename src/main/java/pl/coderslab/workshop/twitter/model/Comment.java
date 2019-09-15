@@ -19,7 +19,6 @@ public class Comment extends AbstractEntity {
     private LocalDateTime created;
     private String text;
 
-
     public Comment(User user, Tweet tweet, LocalDateTime created, String text) {
         this.user = user;
         this.tweet = tweet;
