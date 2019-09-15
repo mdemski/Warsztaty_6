@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User extends AbstractEntity{
+public class User extends AbstractEntity {
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -16,21 +16,26 @@ public class User extends AbstractEntity{
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Tweet> tweets;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Comment> comments;
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-//    private List<Message> messages;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_SENDER_ID")
+    private List<Message> sendedMessages;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_RECIPIENT_ID")
+    private List<Message> receivedMessages;
 
-    public User(String email, String password, String firstName, String lastName, List<Tweet> tweets, List<Comment> comments, List<Message> messages) {
+    public User(String email, String password, String firstName, String lastName, List<Tweet> tweets, List<Comment> comments, List<Message> messages, List<Message> sendedMessages, List<Message> receivedMessages) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.tweets = tweets;
         this.comments = comments;
-//        this.messages = messages;
+        this.sendedMessages = sendedMessages;
+        this.receivedMessages = receivedMessages;
     }
 
     public User() {
@@ -84,24 +89,19 @@ public class User extends AbstractEntity{
         this.tweets = tweets;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", tweets=" + tweets +
-                ", comments=" + comments +
-//                ", messages=" + messages +
-                "} " + super.toString();
+    public List<Message> getSendedMessages() {
+        return sendedMessages;
     }
 
-//    public List<Message> getMessages() {
-//        return messages;
-//    }
-//
-//    public void setMessages(List<Message> messages) {
-//        this.messages = messages;
-//    }
+    public void setSendedMessages(List<Message> sendedMessages) {
+        this.sendedMessages = sendedMessages;
+    }
+
+    public List<Message> getReceivedMessages() {
+        return receivedMessages;
+    }
+
+    public void setReceivedMessages(List<Message> receivedMessages) {
+        this.receivedMessages = receivedMessages;
+    }
 }
