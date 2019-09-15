@@ -1,8 +1,8 @@
 package pl.coderslab.workshop.twitter.model;
 
-
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -22,12 +22,12 @@ public class User extends AbstractEntity {
     private List<Comment> comments;
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_SENDER_ID")
-    private List<Message> sendedMessages;
+    private Set<Message> sendedMessages;
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_RECIPIENT_ID")
-    private List<Message> receivedMessages;
+    private Set<Message> receivedMessages;
 
-    public User(String email, String password, String firstName, String lastName, List<Tweet> tweets, List<Comment> comments, List<Message> messages, List<Message> sendedMessages, List<Message> receivedMessages) {
+    public User(String email, String password, String firstName, String lastName, List<Tweet> tweets, List<Comment> comments, List<Message> messages, Set<Message> sendedMessages, Set<Message> receivedMessages) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -89,19 +89,19 @@ public class User extends AbstractEntity {
         this.tweets = tweets;
     }
 
-    public List<Message> getSendedMessages() {
+    public Set<Message> getSendedMessages() {
         return sendedMessages;
     }
 
-    public void setSendedMessages(List<Message> sendedMessages) {
+    public void setSendedMessages(Set<Message> sendedMessages) {
         this.sendedMessages = sendedMessages;
     }
 
-    public List<Message> getReceivedMessages() {
+    public Set<Message> getReceivedMessages() {
         return receivedMessages;
     }
 
-    public void setReceivedMessages(List<Message> receivedMessages) {
+    public void setReceivedMessages(Set<Message> receivedMessages) {
         this.receivedMessages = receivedMessages;
     }
 }
