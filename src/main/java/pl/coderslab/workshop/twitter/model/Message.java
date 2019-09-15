@@ -11,26 +11,34 @@ import java.time.LocalDateTime;
 public class Message extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name="USER_SENDER_ID")
+    @JoinColumn(name = "USER_SENDER_ID", insertable = false, updatable = false)
     private User sender;
-//    @ManyToOne
-//    @JoinColumn//(name="USER_RECIPIENT_ID")
-//    private User recipient;
+    @ManyToOne
+    @JoinColumn(name = "USER_RECIPIENT_ID", insertable = false, updatable = false)
+    private User recipient;
     private String title;
     private String content;
     private LocalDateTime post;
-    private boolean read;
+//    private boolean read;
 
     public Message(User sender, User recipient, String title, String content, LocalDateTime post, boolean read) {
         this.sender = sender;
-//        this.recipient = recipient;
+        this.recipient = recipient;
         this.title = title;
         this.content = content;
         this.post = post;
-        this.read = read;
+//        this.read = read;
     }
 
     public Message() {
+    }
+
+    public User getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(User recipient) {
+        this.recipient = recipient;
     }
 
     public User getSender() {
@@ -40,14 +48,6 @@ public class Message extends AbstractEntity {
     public void setSender(User sender) {
         this.sender = sender;
     }
-
-//    public User getRecipient() {
-//        return recipient;
-//    }
-
-//    public void setRecipient(User recipient) {
-//        this.recipient = recipient;
-//    }
 
     public String getContent() {
         return content;
@@ -65,13 +65,13 @@ public class Message extends AbstractEntity {
         this.post = post;
     }
 
-    public boolean isRead() {
-        return read;
-    }
+//    public boolean isRead() {
+//        return read;
+//    }
 
-    public void setRead(boolean read) {
-        this.read = read;
-    }
+//    public void setRead(boolean read) {
+//        this.read = read;
+//    }
 
     public String getTitle() {
         return title;
