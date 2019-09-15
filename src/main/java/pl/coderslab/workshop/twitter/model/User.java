@@ -20,14 +20,17 @@ public class User extends AbstractEntity{
     private List<Tweet> tweets;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Comment> comments;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    private List<Message> messages;
 
-    public User(String email, String password, String firstName, String lastName, List<Tweet> tweets, List<Comment> comments) {
+    public User(String email, String password, String firstName, String lastName, List<Tweet> tweets, List<Comment> comments, List<Message> messages) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.tweets = tweets;
         this.comments = comments;
+//        this.messages = messages;
     }
 
     public User() {
@@ -90,6 +93,15 @@ public class User extends AbstractEntity{
                 ", lastName='" + lastName + '\'' +
                 ", tweets=" + tweets +
                 ", comments=" + comments +
+//                ", messages=" + messages +
                 "} " + super.toString();
     }
+
+//    public List<Message> getMessages() {
+//        return messages;
+//    }
+//
+//    public void setMessages(List<Message> messages) {
+//        this.messages = messages;
+//    }
 }
